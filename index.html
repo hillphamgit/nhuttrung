@@ -14,10 +14,8 @@
     --ink: #f3efe6;
     --ink-soft: rgba(243, 239, 230, .72);
     --accent: #7fc4d6;
-    --shade: rgba(10, 16, 20, .78);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; }
   body {
     background: var(--bg);
     color: var(--ink);
@@ -26,94 +24,67 @@
     overflow-x: hidden;
   }
 
-  .scene {
+  .photo {
     position: relative;
-    min-height: 100vh;
-    min-height: 100svh;
-    display: flex;
-    align-items: flex-end;
-    isolation: isolate;
-    overflow: hidden;
+    max-width: 1200px;
+    margin: 0 auto;
   }
-  .scene__photo {
-    position: absolute;
-    inset: 0;
+  .photo img {
+    display: block;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 60% 50%;
-    filter: saturate(.7) brightness(.92) contrast(1.05);
-    transform: scale(1.06);
-    animation: drift 30s ease-in-out infinite alternate;
-    z-index: -3;
-  }
-  .scene::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(180deg, rgba(15, 20, 24, .05) 0%, rgba(15, 20, 24, .15) 40%, var(--shade) 78%, var(--bg) 100%),
-      linear-gradient(90deg, rgba(15, 20, 24, .45) 0%, transparent 60%);
-    z-index: -2;
+    height: auto;
   }
   #rain {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
     pointer-events: none;
   }
 
   .lyrics {
-    width: 100%;
     max-width: 760px;
-    padding: 0 16px 12vh;
-    margin: 0 auto 0 8vw;
+    margin: 0 auto;
+    padding: 56px 16px 72px;
   }
   .lyrics p {
-    font-size: clamp(1.25rem, 3.4vw, 2.1rem);
+    font-size: clamp(1.2rem, 3vw, 1.9rem);
     line-height: 1.5;
     font-style: italic;
-    text-shadow: 0 2px 18px rgba(0, 0, 0, .55);
     opacity: 0;
     transform: translateY(14px);
     filter: blur(4px);
     animation: fall-in 1.8s cubic-bezier(.2, .7, .2, 1) forwards;
   }
   .lyrics p + p { margin-top: .9em; }
-  .lyrics p:nth-child(1) { animation-delay: .6s; }
-  .lyrics p:nth-child(2) { animation-delay: 2.2s; }
-  .lyrics p:nth-child(3) { animation-delay: 3.8s; }
-  .lyrics p:nth-child(4) { animation-delay: 5.4s; }
+  .lyrics p:nth-child(1) { animation-delay: .4s; }
+  .lyrics p:nth-child(2) { animation-delay: 2s; }
+  .lyrics p:nth-child(3) { animation-delay: 3.6s; }
+  .lyrics p:nth-child(4) { animation-delay: 5.2s; }
   .lyrics p:nth-child(even) { color: var(--ink-soft); padding-left: 1.2em; }
   .lyrics p:last-child { color: var(--accent); }
 
   @keyframes fall-in {
     to { opacity: 1; transform: none; filter: none; }
   }
-  @keyframes drift {
-    from { transform: scale(1.06) translate3d(0, 0, 0); }
-    to   { transform: scale(1.12) translate3d(-1.5%, -1%, 0); }
-  }
 
   @media (max-width: 640px) {
-    .scene__photo { object-position: 55% 40%; }
-    .lyrics { margin: 0; padding: 0 16px 10vh; }
+    .lyrics { padding: 36px 16px 56px; }
     .lyrics p:nth-child(even) { padding-left: .8em; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .scene__photo { animation: none; }
     .lyrics p { animation: none; opacity: 1; transform: none; filter: none; }
     #rain { display: none; }
   }
 </style>
 </head>
 <body>
-  <main class="scene">
-    <img class="scene__photo" src="images/nha.webp" alt="Mái hiên nhà xưa với cửa xanh, giỏ lan treo và chiếc xe máy đỗ trước sân">
-    <canvas id="rain" aria-hidden="true"></canvas>
+  <main>
+    <figure class="photo">
+      <img src="images/nha.webp" width="1436" height="1080" alt="Mái hiên nhà xưa với cửa xanh, giỏ lan treo và chiếc xe máy Honda Wave đỗ trước sân">
+      <canvas id="rain" aria-hidden="true"></canvas>
+    </figure>
     <section class="lyrics">
       <p>Từng giọt mưa gọi nhớ rồi giọt mưa buồn bã</p>
       <p>Chiều nay không còn nữa giấc mơ ân tình êm ái</p>
@@ -137,7 +108,7 @@
     canvas.width = w * dpr;
     canvas.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    var count = Math.round(w * h / 9000);
+    var count = Math.round(w * h / 14000);
     drops = [];
     for (var i = 0; i < count; i++) drops.push(makeDrop(true));
   }
@@ -149,7 +120,7 @@
       y: anywhere ? Math.random() * h : -20,
       len: 8 + z * 18,
       speed: 6 + z * 10,
-      alpha: .08 + z * .25
+      alpha: .05 + z * .15
     };
   }
 
@@ -172,6 +143,7 @@
   }
 
   window.addEventListener('resize', resize);
+  window.addEventListener('load', resize);
   resize();
   requestAnimationFrame(frame);
 })();
