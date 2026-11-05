@@ -34,6 +34,7 @@
     width: 100%;
     height: auto;
   }
+  .photo--after { padding-bottom: 72px; }
   #rain {
     position: absolute;
     inset: 0;
@@ -45,7 +46,7 @@
   .lyrics {
     max-width: 760px;
     margin: 0 auto;
-    padding: 56px 16px 72px;
+    padding: 56px 16px;
   }
   .lyrics p {
     font-size: clamp(1.2rem, 3vw, 1.9rem);
@@ -69,7 +70,8 @@
   }
 
   @media (max-width: 640px) {
-    .lyrics { padding: 36px 16px 56px; }
+    .lyrics { padding: 36px 16px; }
+    .photo--after { padding-bottom: 56px; }
     .lyrics p:nth-child(even) { padding-left: .8em; }
   }
 
@@ -91,6 +93,9 @@
       <p>Từng giọt mưa trầm lắng rồi giọt mưa sầu đắng</p>
       <p>Hợp rồi tan thôi đừng mộng mơ khi tình dở dang</p>
     </section>
+    <figure class="photo photo--after">
+      <img src="images/banh-sinh-nhat.webp" width="2000" height="1500" loading="lazy" alt="Bánh sinh nhật dòng chữ Happy Birthday Thầy với ba ngọn nến">
+    </figure>
   </main>
 
 <script>
